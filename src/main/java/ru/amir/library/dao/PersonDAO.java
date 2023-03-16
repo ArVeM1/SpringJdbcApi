@@ -20,26 +20,20 @@ public class PersonDAO {
 
     public List<Person> index() {
         return jdbcTemplate.query("SELECT * FROM Person",
-                new BeanPropertyRowMapper<Person>(Person.class));
+                new BeanPropertyRowMapper<>(Person.class));
     }
 
     public Person show(int id) {
-        return jdbcTemplate.query("SELECT * FROM Person WHERE id=?",
-                        new Object[]{id},
-                        new BeanPropertyRowMapper<Person>(Person.class))
+        return jdbcTemplate.query("SELECT * FROM Person WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
                 .stream().findAny().orElse(null);
     }
 
     public void save(Person person) {
-        jdbcTemplate.update("INSERT INTO Person(fullName, yearOfBirth) VALUES (?,?)",
-                person.getFullName(),
-                person.getYearOfBirth());
+        jdbcTemplate.update("INSERT INTO Person(fullName, yearOfBirth) VALUES (?,?)", person.getFullName(), person.getYearOfBirth());
     }
 
     public void update(int id, Person updatePerson) {
-        jdbcTemplate.update("UPDATE Person SET fullName=?, yearOfBirth=? WHERE id=?",
-                updatePerson.getFullName(),
-                updatePerson.getYearOfBirth(), id);
+        jdbcTemplate.update("UPDATE Person SET fullName=?, yearOfBirth=? WHERE id=?", updatePerson.getFullName(), updatePerson.getYearOfBirth(), id);
     }
 
     public void delete(int id) {
